@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate')%>
+<div id="cluster-map"></div>
+    <div class="boxShadow mt-3">
+        <div id="mainText">
+            <form action="" id="searcher">
+              <input type="text" placeholder="Nombre del Destino..." name="query">
+              <button class="btn">Buscar</button>
+            </form>
+
+             <!-- <h1 id="fontFamily" class="mb-3 mt-2 text-center">R U M B O &nbsp;&nbsp;<span class="txt-type" data-wait="3000" data-words='["S U R", "B A R I L O", "C A L A F Á"]'></span></h1> -->
+         </div>
+    </div>
+<div class="container">
+
+
+
+    <div class="row">
+    <% for (let campground of campgrounds){%>
+
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+                <div class="card shadow border-0 mt-4">
+                <%if(campground.images.length) {%>
+                <img class="img-fluid rounded" style="width: 100% !important;" alt="" src="<%=campground.images[0].url%>">
+                <% }else {%>
+                <img class="img-fluid rounded" style="width: 100% !important;" alt=""
+                    src="https://https://res.cloudinary.com/dcsoghvci/image/upload/c_thumb,w_200,g_face/v1622332431/YelpCamp/uygibfdlbzststus8gz3.jpg">
+                <% } %>
+                <div class="card-body" style="height: 100% !important;">
+                    <h3 id="maintextNav" class="card-title"><%= campground.title %> </h3>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p class="card-text">
+                        <small class="text-muted"><%= campground.location%></small>
+                    </p>
+                    <a class="btn btn-primary" href="/campgrounds/<%=campground._id%>">Ver <%=campground.title%></a>
+                </div>
+            </div>
+        </div>
+    <% }%>
+    </div>
+</div>
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+</script>
+
+<script src="/javascripts/clusterMap.js"></script>
+<script src="/javascripts/text.js"></script>
